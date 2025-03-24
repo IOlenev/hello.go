@@ -1,10 +1,10 @@
 version: '3.8'
 services:
-  dev:
-    container_name: dev
+  compiler:
+    container_name: compiler
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.compiler
     environment:
       - GOOS=${APP_OS}
       - GOARCH=${APP_ARCH}
@@ -13,18 +13,18 @@ services:
     restart: always
     entrypoint: ["tail", "-f", "/dev/null"]
 
-    # environment:
-    #   - VIEWS_DIR=/app/internal/views
-    # depends_on:
-    #   - db
-#   db:
-#     image: postgres:13
-#     restart: always
-#     environment:
-#       POSTGRES_USER: rootusr
-#       POSTGRES_PASSWORD: rootpwd
-#       POSTGRES_DB: document_platform_db
-#     volumes:
-#       - db-data:/var/lib/postgresql/data
-# volumes:
-#   db-data:
+  debugger:
+    container_name: debugger
+    build:
+      context: ./
+      dockerfile: Dockerfile.debugger
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+    #   - "8080:8080"   # App Port
+       - "2345:2345"   # Debug Port
+    # command: ["/go/bin/dlv", "exec", "/app/appdebug", "--headless", "--listen=:2345", "--api-version=2", "--accept-multiclient", "--continue", "--log"]
+    restart: always
+    entrypoint: ["tail", "-f", "/dev/null"]
+    

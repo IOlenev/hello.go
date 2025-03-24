@@ -1,22 +1,38 @@
-## hello go app
+# hello go app
 
-Simple development environment with dockerized go compiler.
+Simple Go development environment with dockerized go compiler.
+The app reads enviroment vars from the env file and greets the user
 
-### Installation
+Unfortunately, the debugger feature does not working ((
+
+## Installation
 
 - Clone repo
-- Copy .env.dist file to .env and configure it`s env vars as you need
-- Init the go module file (if you need) *Don`t forget to fill [Your App name]*
-> docker run --rm -v $(pwd):/app -w /app golang:1.23 go mod init [Your App name]
+- Copy .env file to .env.local and configure it`s env vars as you need
 
-### Up environment
+## Up environment
 
 > make up
 
-### Build binary file
+## Testing code
+
+> make test
+
+## Build binary file (destinaton - project`s root)
 
 > make build
 
-### Down environment
+## Down environment
 
 > make down
+
+## Reminder
+
+To add package to project "app" follow next steps:
+
+- create package subfolder in the root of the project "bla"
+- create go file ./bla/bla.go
+- add package path in the import section of main.go root file
+- exec command in app root
+
+    > go mod tidy
